@@ -1,0 +1,12 @@
+{
+    "extends": "./base-tsconfig.json",
+    "compilerOptions": {
+        "target": "es6",
+        "module": "commonjs",
+        "strict": true,
+        "watch": true
+    },
+    "include": ["src/**/*.ts", "tests/**/*.ts"],
+        "exclude": ["node_modules", "build"]
+    
+}
