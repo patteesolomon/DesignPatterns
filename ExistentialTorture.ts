@@ -1,24 +1,52 @@
 import {Stack} from './Stacks';
-// import {Tree} from './'
-// Anarchy is a node
-
-interface ITask<T>{
-    task(item:T): void;
-    priority: number;
-}
-
+import {Tree} from './Tree'
+// Anarchy is a node  
 // this is a rootNode
+
+    /* Binding functions, memory, decorator and output functions */
+
 class Anarchy<T>{
-     
-    private priority: number;
-    private agenda : void;
-    private goals : boolean[];
+    
+    private _priority: number;
+    public get priority(): number {
+        return this._priority;
+    }
+    public set priority(value: number) {
+        this._priority = value;
+    }
+    private _agenda: void;
+    public get agenda(): void {
+        return this._agenda;
+    }
+    public set agenda(value: void) {
+        this._agenda = value;
+    }
+    private _goals: boolean[];
+    public get goals(): boolean[] {
+        return this._goals;
+    }
+    public set goals(value: boolean[]) {
+        this._goals = value;
+    }
     private leftNode : Anarchy<Node>;
-    private rightNode : Anarchy<Node>; 
+    private rightNode : Anarchy<Node>;
      
+    public get LeftNode (){
+        return this.leftNode;
+    }
+    public get RightNode (){
+        return this.rightNode;
+    }
+    public set LeftNode (s){
+        this.leftNode = s;
+    }
+    public set RightNode (s){
+        this.rightNode = s;
+    }
+
     task(item: T): void {
-            throw new Error("Method not implemented.");
-        }
+        throw new Error("Method not implemented.");
+    }
 
     public static main(): void {
     }
@@ -35,7 +63,8 @@ export default class Yddrasil<Tree>{
     private coreTasks: Stack<Anarchy<Node>>; // First in last out
     private node_count: number; 
     private bufferIn: BigInt64Array; // the data types (vars, elements)
-    private _nodeBank: Node; // linked List in the tree (one of many) 
+    private _nodeBank: Node; // linked List in the tree (one of many)
+
     public get nodeBank(): Node {
         return this._nodeBank;
     }
@@ -82,16 +111,64 @@ export default class Yddrasil<Tree>{
         newe.appendChild(this._nodeBank);
         this._nodeBank = newe;
     }
+
+    public Preorder(node:Anarchy<Node>){
+        if(node === null){
+            return;
+        }
+        
+        // method here
+        this.Process(node);
+
+        this.Preorder(node.LeftNode)
+        this.Postorder(node.RightNode)
+    }
+
+
+    // Function to print postorder traversal
+    public Postorder(node:Anarchy<Node>) {
+        if(node == null){
+            return;
+        }
+
+        this.Postorder(node.LeftNode); 
+        this.Postorder(node.RightNode);
+
+        // node deal with here
+        // method here
+        this.Process(node);
+    }
+
+    public InProcessTraversal (node:Anarchy<Node>){
+
+        // Base case
+        if (node == null)
+        return;
+
+        // Recur on the left subtree
+        this.InProcessTraversal(node.LeftNode);
+
+        // Visit the current node
+        this.Process(node)
+
+        // Recur on the right subtree
+        this.InProcessTraversal(node.RightNode);
+    }
+
+    public Process (node:Anarchy<Node>): void {
+        let e = node.LeftNode;
+        let r = node.RightNode;
+        e.doIt()
+        r.doIt()
+    }
     // count nodes
     public CountNodes (): void{
         this.node_count = 0;
         var current : Node = new Node(); // current
         var d : Node = new Node() // dummy
-        var last : ChildNode | null;
         let i = 0;
         while (this._nodeBank.nextSibling != null) {
             if (this._nodeBank.nodeValue !== null) {
-                last = this._nodeBank.previousSibling;
                 current = this._nodeBank.nextSibling;
             }
             else{
@@ -119,7 +196,7 @@ export default class Yddrasil<Tree>{
         this._nodeBank = node;
     }
  
-    // main loop of program
+    // main loop of program decorator
     public static main(): void {
     }
  
