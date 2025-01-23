@@ -1,4 +1,5 @@
-import {Stack} from './Stacks'
+import {Stack} from './Stacks';
+// import {Tree} from './'
 // Anarchy is a node
 
 interface ITask<T>{
@@ -6,17 +7,20 @@ interface ITask<T>{
     priority: number;
 }
 
-// this is a Node
-class Anarchy<T> implements ITask<T>{
-    task(item: T): void {
-        throw new Error("Method not implemented.");
-    }
-    priority: number;
+// this is a rootNode
+class Anarchy<T>{
+     
+    private priority: number;
     private agenda : void;
     private goals : boolean[];
+    private leftNode : Anarchy<Node>;
+    private rightNode : Anarchy<Node>; 
+     
+    task(item: T): void {
+            throw new Error("Method not implemented.");
+        }
+
     public static main(): void {
-        let a: Anarchy<Node> = new Anarchy();
-        a.doIt();
     }
 
     // whatever methods
@@ -26,13 +30,12 @@ class Anarchy<T> implements ITask<T>{
 }
 
 // tree class
-export default class Yddrasil {
+export default class Yddrasil<Tree>{
     private _: Anarchy<Node>; // root tree node
     private coreTasks: Stack<Anarchy<Node>>; // First in last out
     private node_count: number; 
     private bufferIn: BigInt64Array; // the data types (vars, elements)
-    private _nodeBank: Node; // linked List in the tree (one of many)
-
+    private _nodeBank: Node; // linked List in the tree (one of many) 
     public get nodeBank(): Node {
         return this._nodeBank;
     }
@@ -115,13 +118,11 @@ export default class Yddrasil {
     public setnB(node: Node): void{
         this._nodeBank = node;
     }
-
-
+ 
     // main loop of program
     public static main(): void {
     }
-
-
+ 
     // exe builder
     public static build(): void{ 
     }
