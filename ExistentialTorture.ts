@@ -1,5 +1,6 @@
 import {Stack} from './Stacks';
-import {Tree} from './Tree'
+import { dfs } from './DFS';
+// import {Tree} from './Tree'
 // Anarchy is a node  
 // this is a rootNode
 
@@ -48,21 +49,17 @@ class Anarchy<T>{
         throw new Error("Method not implemented.");
     }
 
-    public static main(): void {
-    }
-
     // whatever methods
     public doIt(): void {
         console.log("I'm doing it!");
     }
 }
 
-// tree class
-export default class Yddrasil<Tree>{
+// forest class there is only one of these
+export class Yddrasil {
     private _: Anarchy<Node>; // root tree node
     private coreTasks: Stack<Anarchy<Node>>; // First in last out
-    private node_count: number; 
-    private bufferIn: BigInt64Array; // the data types (vars, elements)
+    private node_count: number;  
     private _nodeBank: Node; // linked List in the tree (one of many)
 
     public get nodeBank(): Node {
@@ -75,18 +72,16 @@ export default class Yddrasil<Tree>{
     // replaces not index increasing
     public AppendAt (where: number, nodeIn: Node) : void
     {
-        var lv = nodeIn;
-        var current : Node = new Node(); // current
-        var d : Node = new Node() // dummy
-        var last : Node = new Node();
+        let lv = nodeIn;
+        let current : Node = new Node(); // current
+        let d : Node = new Node() // dummy 
         let i = 0;
         while (this._nodeBank.nextSibling != null) {
             i++;
-            d ? this._nodeBank.nextSibling : null;
+            d = this._nodeBank.nextSibling;
             if (d != null && i < where)
-            {
-                last = d;
-                current.nodeValue ? d.nodeValue : last.nodeValue;
+            { 
+                current.nodeValue = d.nodeValue;
             } 
             else if (i >= where)
             {
@@ -106,7 +101,7 @@ export default class Yddrasil<Tree>{
 
     // AppendBeginning and saving the last value
     public AppendBeginning (nodeIn : Node): void{
-        var newe = new Node();
+        let newe = new Node();
         newe.appendChild(nodeIn);
         newe.appendChild(this._nodeBank);
         this._nodeBank = newe;
@@ -121,7 +116,7 @@ export default class Yddrasil<Tree>{
         this.Process(node);
 
         this.Preorder(node.LeftNode)
-        this.Postorder(node.RightNode)
+        this.Preorder(node.RightNode)
     }
 
 
@@ -163,23 +158,18 @@ export default class Yddrasil<Tree>{
     }
     // count nodes
     public CountNodes (): void{
-        this.node_count = 0;
-        var current : Node = new Node(); // current
-        var d : Node = new Node() // dummy
+        this.node_count = 0; 
         let i = 0;
         while (this._nodeBank.nextSibling != null) {
-            if (this._nodeBank.nodeValue !== null) {
-                current = this._nodeBank.nextSibling;
+            if (this._nodeBank.nodeValue !== null) { 
+                i++; 
             }
             else{
                 this.node_count = i;
                 return;
-            }
-            d ? current : null;
-            i++;
+            } 
         }
         this.node_count = i;
-        return;
     }
     
     public nB(): Node{
@@ -195,13 +185,79 @@ export default class Yddrasil<Tree>{
     public setnB(node: Node): void{
         this._nodeBank = node;
     }
- 
-    // main loop of program decorator
-    public static main(): void {
-    }
- 
-    // exe builder
-    public static build(): void{ 
-    }
+
+    // acclimation functions to exist 
+    /*
+        pulsing for finding and collecting nodes
+         FIND AND COLLECT ALL NODES
+    */
+    public Pulse(): void{ 
+
+        let nodesToPulse = this._nodeBank;
+        let ncNew = this.nodeCount();
     
+        let phoneBook = dfs(nodesToPulse, ncNew);
+         
+        // array to anarchy nodes
+        for (let node of phoneBook) {
+            const anarchyNode = new Anarchy<Node>();
+            anarchyNode.priority = node.nodeValue ? 1 : 0;
+            anarchyNode.goals = [true];
+            if (node.nextSibling) {
+                anarchyNode.RightNode = new Anarchy<Node>();
+            }
+            if (node.previousSibling) {
+                anarchyNode.LeftNode = new Anarchy<Node>();
+            }
+            this.coreTasks.push(anarchyNode);
+        } 
+    } 
+
+    // init node calls | init Nodes first with continue?
+
+    // condition == ie: I need all my graphics rendered that's it..
+
+    // ai searches for Nodes regarding graphical data 
+
+    // requirement search for rendering in scene instance.
+    
+    // startFrom several branches based on condition
+
+    // process function in Godot.
+
+    // scene result completion.
+
+    // back to init node call.. 
+    // Prompt user if input is complete without halting render
+    // if continue 
+    // go back and init the rest in an order that reqs allow.
+    // use safePriority.json
+
+    /* 
+        since continue is used rePulse the game program so that
+        each node is reprocessed and changed based on environment.json
+        and nodeRules.json
+
+        ie: environment = basic variables that don't change like the 
+        character's graphical portrait unless strict user defined condition.
+        A no-touch-list.
+
+        ie: conditions, changes, log statements, = are defined in
+        the nodeRules.json.. and are subject to change based on the Anarchy Nodes
+        interacting with the forest/trees/Nodes
+        ie: Player is sick from snake bite. Player Icon changes.
+
+        README NOTE 
+        2025-02-08
+
+        I know you can just use an observer or a signal based system.
+        But for the larger scale of things. I want to try something new
+        and use less pipeline functions.
+        
+        I know this isn't the best way. But it's my implementation.
+        and I'll add the best way to this if needed.
+        Feedback is good.
+
+    */
 } 
+ 
