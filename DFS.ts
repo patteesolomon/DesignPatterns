@@ -1,4 +1,3 @@
-
 // I need this to return a collection of some kind
 export function dfsRec(adj: { [ x: number ]: any; }, visited: any[], s: string)
 {
@@ -35,8 +34,7 @@ function addEdge(adj, s, t)
     // Due to undirected Graph
     adj[t].push(s);
 }
-
-
+ 
 const V = 5; // Number of vertices in the graph
 
 // Create an adjacency list for the graph
