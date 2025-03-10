@@ -1,12 +1,14 @@
 import {Stack} from './Stacks';
 import { dfs } from './DFS';
 import {Heap} from './Heap';
-// Anarchy is a node  
-// this is a rootNode
+// Anarchy is a rootNode type
 
-    /* Binding functions, memory, decorator and output functions */
+/* Binding functions, memory, decorator and output functions */
 
-// bindings for the dom
+// bindings for the dom, Axios, React, Godot, MongoDB(fast-dynamic)
+//  and/or pg(fast relational) and/or SpaceTimeDB(fast-process based), express, etc..
+// I want SpaceTime to be for higher functions only due to cloud loading expenses.
+// maybe use Redis for auth or add more database technologies..
 export interface AutoCalls
 {
    element: HTMLElement;
@@ -15,6 +17,11 @@ export interface AutoCalls
 /* Anarchy tree class */
 
 export class Anarchy<T>{
+    // an init function
+    constructor(f : Function)
+    {
+        this._agenda = f();
+    }
 
     // this is a set of actions on its own.
     // a tree of routines to be set and executed.
@@ -129,7 +136,6 @@ export class Yddrasil {
         newe.appendChild(this._nodeBank);
         this._nodeBank = newe;
     }
-    //TODO: find better a way to do this if possible
     public Preorder(node:Anarchy<Node>){
         if(node === null){
             return;
@@ -141,8 +147,6 @@ export class Yddrasil {
         this.Preorder(node.LeftNode)
         this.Preorder(node.RightNode)
     }
-    //TODO: find better a way to do this if possible
-    // Function to print postorder traversal
     public Postorder(node:Anarchy<Node>) {
         if(node == null){
             return;
@@ -199,7 +203,7 @@ export class Yddrasil {
         return this._nodeBank;
     }
     
-    // getter for nodecounts
+    // getter for node counts
     public nodeCount():number{ 
         return this.node_count;
     }
@@ -222,6 +226,7 @@ export class Yddrasil {
          
         // array to anarchy nodes
         for(let node of phoneBook) {
+            // check stack of priority and add this as next 
             const anarchyNode = new Anarchy<Node>();
             if(node.nodeValue > 0) {
                     anarchyNode.priority = node.nodeValue
@@ -230,9 +235,11 @@ export class Yddrasil {
                     anarchyNode.priority = 0
                 }
             if (node.nextSibling) {
+            // check stack of priority and add this as next right node
                 anarchyNode.RightNode = new Anarchy<Node>();
             }
             if (node.previousSibling) {
+            // check stack of priority and add this as next left node
                 anarchyNode.LeftNode = new Anarchy<Node>();
             }
             anarchyNode.priority > 0 ? // value check. If there is none. do not perform it.
@@ -245,9 +252,33 @@ export class Yddrasil {
     // init node calls | init Nodes first with continue?
 
     public init():void { 
-        this.Pulse();
-        
-        
+         
+        if(this._nodeBank != null) 
+            {this.Pulse()} 
+            else{
+                let worldStart = new Anarchy<Node>(()=>{console.log("HI!")}); //  
+                this.AddToCompletions(worldStart);
+                this.Pulse(); 
+            }
+    }
+
+    public initF(f: Function):void {
+        this._.agenda = f();
+        if(this._nodeBank != null) 
+            {this.Pulse()} 
+            else{
+                let worldStart = new Anarchy<Node>(()=>{f}); //  
+                this.AddToCompletions(worldStart);
+                this.Pulse(); 
+            }
+    }
+
+    public initFS(f: Function[]): void{
+
+    }
+
+    public AddToCompletions(node : Anarchy<Node>): void{
+
     }
 
     // condition == ie: I need all my graphics rendered that's it..
@@ -268,7 +299,8 @@ export class Yddrasil {
     // back to init node call.. 
     // Prompt user if input is complete without halting render
     // if continue 
-    // go back and init the rest in an order that reqs allow.
+    // go back and init the rest in an order that the requirement
+    // (condition) allows.
     // use safePriority.json
 
     // the need for prisma is for finding nodes in an order that suits
