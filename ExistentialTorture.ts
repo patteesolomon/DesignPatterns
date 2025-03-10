@@ -245,12 +245,17 @@ export class Yddrasil {
     // init node calls | init Nodes first with continue?
 
     public init():void { 
-
+        this.Pulse();
+        
+        
     }
 
     // condition == ie: I need all my graphics rendered that's it..
 
-    // ai searches for Nodes regarding graphical data. the ai isn't built in. Thats dumb. you're using a backend for this. and if not, use a loop.
+    // ai searches for Nodes regarding graphical data. 
+
+    // The ai isn't built in. Thats dumb. you're using a backend for this. 
+    // and if no ai, use a loop.
 
     // requirement search for rendering in scene instance.
     
@@ -283,6 +288,7 @@ export class Yddrasil {
         // Entropy 3  
 
         // are the three driving factors
+
         /**behind finding the value
          * in this prisma and forming a 
          * prismatic or circular relation.
@@ -294,10 +300,28 @@ export class Yddrasil {
         // a search is made based on
         // the heap's data and desired
         // function. and if the determinant
-        // argument is met either one of the 
+        // argument is met, either one of the 
         // searched function or heap function 
-        // can be put on task then like normal fashion..
+        // can be put on the tasklist (coreTasks)
+        // then like normal fashion..
         // the task is put on completions
+
+        // (this happens only if user designates it or an ai is installed)
+        // an anarchy node is created 
+        // when the needs aren't met
+        // and this needs an ai to 
+        // go through and add the 
+        // relevant changes or tasks. 
+        // This means that it will only 
+        // work if the AI itself can
+        // augment these changes without 
+        // a lot of user input during 
+        // debugging or runtime.
+
+        // (This happens regardless)
+        // then the input changes from the user 
+        // during or outside of runtime 
+        // can be delivered.
     
     }
 
@@ -339,15 +363,16 @@ export class Yddrasil {
      * in development.
      * All without the restraints of any limiting
      * design pattern already used in SWE or 
-     * gamedev in a chaotic format with more 
+     * game dev in a chaotic format with more 
      * overhead command. 
      * I use Norse mythology because I want the 
      * commands that control this software you use
      * this for more or less to be your 'magic'
      * that controls this rather than try/catch
      * or something generic.
-     * A closely node based Data Structure with
-     * more dynamic power in just a patter that is
+     * A closely Decorator/State inspired and node based Data Structure with
+     * more dynamic power. 
+     * All in just a pattern that is
      * easy to understand with ai implementation
      * compatibility.
      */
