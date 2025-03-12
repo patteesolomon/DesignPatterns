@@ -212,12 +212,20 @@ export class Yddrasil {
         this._nodeBank = node;
     }
 
+    public addNewNode(node:Node): void{
+
+        if(node != null)
+        {
+            this._nodeBank.appendChild(node);
+        }
+    }
+
     // acclimation functions to exist 
     /*
         pulsing for finding and collecting nodes
          FIND AND COLLECT ALL NODES
     */
-    public Pulse():void{ 
+    public Pulse():void { 
 
         let nodesToPulse = this._nodeBank;
         let ncNew = this.nodeCount();
@@ -227,7 +235,7 @@ export class Yddrasil {
         // array to anarchy nodes
         for(let node of phoneBook) {
             // check stack of priority and add this as next 
-            const anarchyNode = new Anarchy<Node>();
+            const anarchyNode = new Anarchy<Node>(node);
             if(node.nodeValue > 0) {
                     anarchyNode.priority = node.nodeValue
                 }
@@ -236,11 +244,11 @@ export class Yddrasil {
                 }
             if (node.nextSibling) {
             // check stack of priority and add this as next right node
-                anarchyNode.RightNode = new Anarchy<Node>();
+                anarchyNode.RightNode = new Anarchy<Node>(node.nextSibling);
             }
             if (node.previousSibling) {
             // check stack of priority and add this as next left node
-                anarchyNode.LeftNode = new Anarchy<Node>();
+                anarchyNode.LeftNode = new Anarchy<Node>(node.nextSibling);
             }
             anarchyNode.priority > 0 ? // value check. If there is none. do not perform it.
             this.coreTasks.push(anarchyNode)
@@ -257,28 +265,44 @@ export class Yddrasil {
             {this.Pulse()} 
             else{
                 let worldStart = new Anarchy<Node>(()=>{console.log("HI!")}); //  
-                this.AddToCompletions(worldStart);
+                this.AddToFs(worldStart);
                 this.Pulse(); 
             }
     }
 
     public initF(f: Function):void {
         this._.agenda = f();
-        if(this._nodeBank != null) 
-            {this.Pulse()} 
+        if(f != null){ 
+            let worldStart = new Anarchy<Node>(()=>this._.agenda); // 
+            this.AddToFs(worldStart);
+            this.Pulse()
+        } 
+        else{
+            let worldStart = new Anarchy<Node>(()=>{console.log("HI!")}); //  
+            this.AddToFs(worldStart);
+            this.Pulse(); 
+        }
+    }
+
+    public initFS(f: Function[]):void {
+        this._.agenda = f[0]();
+        for (const func of f) {
+            if(func != null){ 
+                let anode = new Anarchy<Node>(func); 
+                this.AddToFs(anode); 
+            } 
             else{
-                let worldStart = new Anarchy<Node>(()=>{f}); //  
-                this.AddToCompletions(worldStart);
-                this.Pulse(); 
-            }
+                let n = new Anarchy<Node>(() => {console.log("HI!")}); //  
+                this.AddToFs(n); 
+            } 
+        }
+        this.Pulse();
     }
 
-    public initFS(f: Function[]): void{
-
-    }
-
-    public AddToCompletions(node : Anarchy<Node>): void{
-
+    // just use this to push anarchy nodes to the 
+    // core tasklist
+    public AddToFs(anode : Anarchy<Node>):void {
+        this.coreTasks.push(anode);
     }
 
     // condition == ie: I need all my graphics rendered that's it..
